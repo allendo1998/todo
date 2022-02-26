@@ -14,6 +14,7 @@ const todo = () => {
                 activity.value = null;
                 todo.push(user_input);
                 add();
+                display_todo_list();
             }
         }
     })
@@ -36,10 +37,23 @@ const todo = () => {
                         todo.push(items.todo[i]);
                     }
                     console.log(todo.length);
+                    display_todo_list();
                 }
             });
         } catch (err) {
             console.log("List is empty");
+        }
+    }
+
+    function display_todo_list() {
+        console.log("i need to display something");
+        list.innerHTML = '';
+        for(var i = 0; i < todo.length; i++) {
+            var item = todo[i];
+            var li = document.createElement('li');
+            li.setAttribute("id", i);
+            li.appendChild(document.createTextNode(item));
+            list.appendChild(li);
         }
     }
 
@@ -63,6 +77,7 @@ const todo = () => {
 
     clear.addEventListener('click', () =>{
         chrome.storage.local.clear();
+        list.innerHTML = ' ';
     })
 }
 
