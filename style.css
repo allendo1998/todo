@@ -1,0 +1,8 @@
+ul {
+    list-style-type: none;
+}
+
+li:before {
+    content: 'radio_button_unchecked';
+    font-family: 'Material Icons';
+}

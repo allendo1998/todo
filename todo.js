@@ -65,9 +65,7 @@ const todo = () => {
                     for(var i = 0; i < items.todo.length; i++){
                         console.log(items.todo[i]);
                     }
-                }
-
-                
+                } 
             });
         } catch (err) {
             console.log("List is empty");
