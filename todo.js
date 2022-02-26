@@ -3,6 +3,7 @@ const todo = () => {
     var debug = document.getElementById("debug");
     var clear = document.getElementById("clear");
     var list = document.getElementById("list");
+
     const todo = [];    
     load_data();
 
@@ -32,7 +33,9 @@ const todo = () => {
                 if(items.todo.length > 0){
                     for(var i = 0; i < items.todo.length; i++){
                         console.log(items.todo[i]);
+                        todo.push(items.todo[i]);
                     }
+                    console.log(todo.length);
                 }
             });
         } catch (err) {
@@ -43,6 +46,7 @@ const todo = () => {
     debug.addEventListener('click', () =>{
         try {
             chrome.storage.local.get(['todo'], function(items) {
+                console.log(todo.length);
                 if(items.todo.length > 0){
                     for(var i = 0; i < items.todo.length; i++){
                         console.log(items.todo[i]);
