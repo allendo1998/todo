@@ -1,29 +1,59 @@
 const todo = () => {
     var activity = document.getElementById("activity");
     var debug = document.getElementById("debug");
+    var clear = document.getElementById("clear");
     var list = document.getElementById("list");
-    const todoList = [];
+    const todo = [];
+    var index = 0;
+    
+    load_data();
 
     activity.addEventListener("keyup", function(event) {
         if(event.key === 'Enter'){
             var user_input = activity.value;
             if(user_input.length > 0) {
                 activity.value = null;
-                todoList.push(user_input);
-                display_task(user_input, todoList.length - 1);
+                todo.push(user_input);
+                add(todo.length - 1 ,user_input);
             }
         }
     })
 
-    function display_task(user_input, id) {
-        console.log("trying to change");
-        list.innerHTML +="<li id='" + id +"'><input type='checkbox'>" + user_input + "</li>";
+    async function add(key, user_input) {
+        console.log(user_input);
+        try {
+            var value_key = key;
+            var value = user_input;
+            chrome.storage.local.set({ [value_key]: value });
+          } catch (err) {
+            console.log(err);
+          }
+    }
+
+    function load_data(){
+        chrome.storage.local.get(null, function(items) {
+            console.log(items);
+            for(const [key, value] of Object.entries(items)){
+                console.log(key,value);
+                todo[key] = value;
+                index++;
+            }       
+        });
     }
 
     debug.addEventListener('click', () =>{
-        for(var i = 0; i < todoList.length; i++){
-            console.log(todoList[i]);
-        }
+        chrome.storage.local.get(null, function(items) {
+            console.log(items);
+            for(const [key, value] of Object.entries(items)){
+                console.log(key,value);
+            }       
+        });
+    })
+
+    clear.addEventListener('click', () =>{
+        chrome.storage.local.clear(() => {
+            index = 0;
+        });
     })
 }
 
