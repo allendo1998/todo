@@ -3,9 +3,7 @@ const todo = () => {
     var debug = document.getElementById("debug");
     var clear = document.getElementById("clear");
     var list = document.getElementById("list");
-    const todo = [];
-    var index = 0;
-    
+    const todo = [];    
     load_data();
 
     activity.addEventListener("keyup", function(event) {
@@ -14,46 +12,53 @@ const todo = () => {
             if(user_input.length > 0) {
                 activity.value = null;
                 todo.push(user_input);
-                add(todo.length - 1 ,user_input);
+                add();
             }
         }
     })
 
-    async function add(key, user_input) {
-        console.log(user_input);
+    async function add() {
         try {
-            var value_key = key;
-            var value = user_input;
-            chrome.storage.local.set({ [value_key]: value });
+            var value_key = 'todo';
+            chrome.storage.local.set({ [value_key]: todo });
           } catch (err) {
             console.log(err);
           }
     }
 
     function load_data(){
-        chrome.storage.local.get(null, function(items) {
-            console.log(items);
-            for(const [key, value] of Object.entries(items)){
-                console.log(key,value);
-                todo[key] = value;
-                index++;
-            }       
-        });
+        try {
+            chrome.storage.local.get(['todo'], function(items) {
+                if(items.todo.length > 0){
+                    for(var i = 0; i < items.todo.length; i++){
+                        console.log(items.todo[i]);
+                    }
+                }
+            });
+        } catch (err) {
+            console.log("List is empty");
+        }
     }
 
     debug.addEventListener('click', () =>{
-        chrome.storage.local.get(null, function(items) {
-            console.log(items);
-            for(const [key, value] of Object.entries(items)){
-                console.log(key,value);
-            }       
-        });
+        try {
+            chrome.storage.local.get(['todo'], function(items) {
+                if(items.todo.length > 0){
+                    for(var i = 0; i < items.todo.length; i++){
+                        console.log(items.todo[i]);
+                    }
+                }
+
+                
+            });
+        } catch (err) {
+            console.log("List is empty");
+        }
+
     })
 
     clear.addEventListener('click', () =>{
-        chrome.storage.local.clear(() => {
-            index = 0;
-        });
+        chrome.storage.local.clear();
     })
 }
 
