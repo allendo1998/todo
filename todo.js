@@ -8,18 +8,16 @@ const todo = () => {
         if(event.key === 'Enter'){
             var user_input = activity.value;
             if(user_input.length > 0) {
-                console.log(user_input);
-                console.log(user_input.length);
                 activity.value = null;
                 todoList.push(user_input);
-                display_task(user_input);
+                display_task(user_input, todoList.length - 1);
             }
         }
     })
 
-    function display_task(user_input) {
+    function display_task(user_input, id) {
         console.log("trying to change");
-        list.innerHTML +="<li><input type='checkbox'>" + user_input + "</li>";
+        list.innerHTML +="<li id='" + id +"'><input type='checkbox'>" + user_input + "</li>";
     }
 
     debug.addEventListener('click', () =>{
