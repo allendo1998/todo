@@ -3,7 +3,6 @@ const todo = () => {
     var debug = document.getElementById("debug");
     var clear = document.getElementById("clear");
     var list = document.getElementById("list");
-
     const todo = [];    
     load_data();
 
@@ -15,6 +14,21 @@ const todo = () => {
                 todo.push(user_input);
                 add();
                 display_todo_list();
+            }
+        }
+    })
+
+    list.addEventListener("click", function(e) {
+        if(e.target && e.target.nodeName == "LI") {
+            console.log("i am clicking");
+            var item = document.getElementById(e.target.id);
+
+            if(item.style.textDecorationLine.localeCompare("line-through") == 0){
+                console.log("same");
+                document.getElementById(e.target.id).style.textDecorationLine = "none";
+            }
+            else {
+                document.getElementById(e.target.id).style.textDecorationLine = "line-through";
             }
         }
     })
