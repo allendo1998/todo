@@ -3,6 +3,7 @@ const todo = () => {
     var debug = document.getElementById("debug");
     var clear = document.getElementById("clear");
     var list = document.getElementById("list");
+    var removeList = document.getElementById("remove");
     const todo = [];    
     load_data();
 
@@ -20,8 +21,7 @@ const todo = () => {
 
     list.addEventListener("click", function(e) {
         if(e.target && e.target.nodeName == "LI") {
-            console.log("i am clicking");
-            // var item = document.getElementById(e.target.id);
+            console.log(e.target.id);
             if(todo[e.target.id].completed === false) {
                 todo[e.target.id].completed = true;
                 add();
@@ -35,6 +35,15 @@ const todo = () => {
         }
     })
 
+    removeList.addEventListener("click", function(e) {
+        if(e.target && e.target.nodeName == "BUTTON") {
+            var id = e.target.id.substr(e.target.id.length - 1);
+            console.log(id);
+            remove(id);
+            display_todo_list();
+        }
+    })
+
     async function add() {
         try {
             var value_key = 'todo';
@@ -44,15 +53,24 @@ const todo = () => {
           }
     }
 
+    function remove(id) {
+        if(id == 0){
+            console.log("hi");
+            todo.splice(0,1);
+        }
+        else {
+            todo.splice(id,id);
+        }        
+        add();
+    }
+
     function load_data(){
         try {
             chrome.storage.local.get(['todo'], function(items) {
                 if(items.todo.length > 0){
                     for(var i = 0; i < items.todo.length; i++){
-                        console.log(items.todo[i]);
                         todo.push(items.todo[i]);
                     }
-                    console.log(todo.length);
                     display_todo_list();
                 }
             });
@@ -70,44 +88,25 @@ const todo = () => {
         else {
             task.style.textDecorationLine = "line-through";
         }
-
     }
 
     function display_todo_list() {
-        console.log("i need to display something");
         list.innerHTML = '';
+        removeList.innerHTML = '';
+
         for(var i = 0; i < todo.length; i++) {
             var item = todo[i];
             var li = document.createElement('li');
             li.setAttribute("id", i);
             li.appendChild(document.createTextNode(item.task));
             list.appendChild(li);
+
+            var btn = document.createElement("button");
+            btn.setAttribute("id", "btn" + i);
+            removeList.appendChild(btn);
             check_completed(i);
         }
     }
-
-    debug.addEventListener('click', () =>{
-        try {
-            chrome.storage.local.get(['todo'], function(items) {
-                console.log(todo.length);
-                if(items.todo.length > 0){
-                    for(var i = 0; i < items.todo.length; i++){
-                        console.log(items.todo[i].task);
-                        console.log(items.todo[i].completed);
-                    }
-                } 
-            });
-        } catch (err) {
-            console.log("List is empty");
-        }
-
-    })
-
-    clear.addEventListener('click', () =>{
-        chrome.storage.local.clear();
-        list.innerHTML = ' ';
-    })
 }
 
 todo();
-
