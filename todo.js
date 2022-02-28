@@ -80,11 +80,14 @@ const todo = () => {
             document.getElementById(id).style.textDecorationLine = "none";
             document.getElementById("checkBox" + id).setAttribute("class", "material-icons-outlined");
             document.getElementById("checkBox" + id).innerHTML = 'circle';
+            document.getElementById("checkBox" + id).style.color = "#808080";
+
         }
         else {
             document.getElementById(id).style.textDecorationLine = "line-through";
             document.getElementById("checkBox" + id).setAttribute("class", "material-icons-sharp");
             document.getElementById("checkBox" + id).innerHTML = 'check_circle'; 
+            document.getElementById("checkBox" + id).style.color = "#32CD32"; 
         }
     }
 
