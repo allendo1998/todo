@@ -26,6 +26,21 @@ const todo = () => {
         }
     })
 
+    row.addEventListener("click", function(e) {
+        if(e.target && e.target.nodeName == "P") {
+            var id = e.target.id.substr(e.target.id.length - 1);
+            console.log(id);
+            if(todo[id].completed === false){
+                document.getElementById(id).style.textDecorationLine = "line-through";
+                todo[id].completed = true;
+            }
+            else {
+                document.getElementById(id).style.textDecorationLine = "none";
+                todo[id].completed = false;
+            }
+        }
+    })
+
 
     async function add() {
         try {
