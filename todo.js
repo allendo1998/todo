@@ -20,27 +20,24 @@ const todo = () => {
     row.addEventListener("click", function(e) {
         if(e.target && e.target.nodeName == "A") {
            var id = e.target.id.substr(e.target.id.length - 1);
-            console.log(id);
             remove(id);
             display_todo_list();
         }
     })
 
     row.addEventListener("click", function(e) {
-        if(e.target && e.target.nodeName == "P") {
+        if(e.target && e.target.nodeName == "P" || e.target && e.target.nodeName == "I") {
             var id = e.target.id.substr(e.target.id.length - 1);
-            console.log(id);
             if(todo[id].completed === false){
-                document.getElementById(id).style.textDecorationLine = "line-through";
                 todo[id].completed = true;
             }
             else {
-                document.getElementById(id).style.textDecorationLine = "none";
                 todo[id].completed = false;
             }
+            add();
+            check_completed(id);
         }
     })
-
 
     async function add() {
         try {
@@ -78,13 +75,16 @@ const todo = () => {
     }
 
     function check_completed(id){
-        var task = document.getElementById(id);
-
+        console.log(todo[id].completed);
         if(todo[id].completed === false) {
-            task.style.textDecorationLine = "none";
+            document.getElementById(id).style.textDecorationLine = "none";
+            document.getElementById("checkBox" + id).setAttribute("class", "material-icons-outlined");
+            document.getElementById("checkBox" + id).innerHTML = 'circle';
         }
         else {
-            task.style.textDecorationLine = "line-through";
+            document.getElementById(id).style.textDecorationLine = "line-through";
+            document.getElementById("checkBox" + id).setAttribute("class", "material-icons-sharp");
+            document.getElementById("checkBox" + id).innerHTML = 'check_circle'; 
         }
     }
 
@@ -111,11 +111,13 @@ const todo = () => {
 
             var btn = document.createElement("a");
             btn.setAttribute("id", "btn" + i);
-            btn.appendChild(document.createTextNode("x"));
+            btn.setAttribute("class", "material-icons-outlined");
+            btn.appendChild(document.createTextNode("clear"));
 
-            var checkbox = document.createElement("p");
+            var checkbox = document.createElement("i");
             checkbox.setAttribute("id", "checkBox" + i );
-            checkbox.appendChild(document.createTextNode("o"));
+            checkbox.setAttribute("class", "material-icons-outlined");
+            checkbox.appendChild(document.createTextNode("circle"));
 
             left.appendChild(checkbox);
             right.appendChild(btn)
@@ -124,6 +126,8 @@ const todo = () => {
             section.appendChild(center);
             section.appendChild(right);
             row.appendChild(section);
+
+            check_completed(i);
         }
     }
 }
