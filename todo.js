@@ -1,9 +1,7 @@
 const todo = () => {
     var activity = document.getElementById("activity");
-    var debug = document.getElementById("debug");
-    var clear = document.getElementById("clear");
-    var list = document.getElementById("list");
-    var removeList = document.getElementById("remove");
+    var row = document.getElementById("row");
+    
     const todo = [];    
     load_data();
 
@@ -19,30 +17,15 @@ const todo = () => {
         }
     })
 
-    list.addEventListener("click", function(e) {
-        if(e.target && e.target.nodeName == "LI") {
-            console.log(e.target.id);
-            if(todo[e.target.id].completed === false) {
-                todo[e.target.id].completed = true;
-                add();
-            }
-            else {
-                todo[e.target.id].completed = false;
-                add();
-            }
-
-            check_completed(e.target.id);
-        }
-    })
-
-    removeList.addEventListener("click", function(e) {
-        if(e.target && e.target.nodeName == "BUTTON") {
-            var id = e.target.id.substr(e.target.id.length - 1);
+    row.addEventListener("click", function(e) {
+        if(e.target && e.target.nodeName == "A") {
+           var id = e.target.id.substr(e.target.id.length - 1);
             console.log(id);
             remove(id);
             display_todo_list();
         }
     })
+
 
     async function add() {
         try {
@@ -91,20 +74,41 @@ const todo = () => {
     }
 
     function display_todo_list() {
-        list.innerHTML = '';
-        removeList.innerHTML = '';
-
+        row.innerHTML = '';
         for(var i = 0; i < todo.length; i++) {
             var item = todo[i];
-            var li = document.createElement('li');
-            li.setAttribute("id", i);
-            li.appendChild(document.createTextNode(item.task));
-            list.appendChild(li);
 
-            var btn = document.createElement("button");
+            var section = document.createElement('div');
+            section.setAttribute("class", "section");
+
+            var left = document.createElement('div');
+            left.setAttribute("class", "left");
+
+            var center = document.createElement('div');
+            center.setAttribute("class", "center");
+
+            var right = document.createElement('div');
+            right.setAttribute("class", "right");
+
+            var task = document.createElement('p');
+            task.setAttribute("id", i);
+            task.appendChild(document.createTextNode(item.task));
+
+            var btn = document.createElement("a");
             btn.setAttribute("id", "btn" + i);
-            removeList.appendChild(btn);
-            check_completed(i);
+            btn.appendChild(document.createTextNode("x"));
+
+            var checkbox = document.createElement("p");
+            checkbox.setAttribute("id", "checkBox" + i );
+            checkbox.appendChild(document.createTextNode("o"));
+
+            left.appendChild(checkbox);
+            right.appendChild(btn)
+            center.appendChild(task);
+            section.appendChild(left);
+            section.appendChild(center);
+            section.appendChild(right);
+            row.appendChild(section);
         }
     }
 }

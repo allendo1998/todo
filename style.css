@@ -1,8 +1,27 @@
-ul {
-    list-style-type: none;
+#row {
+  display: flex;
+  flex-direction: column;
 }
 
-li:before {
-    content: 'radio_button_unchecked';
-    font-family: 'Material Icons';
+.section {
+  display: flex;
+  flex-direction: row;
+}
+
+.left {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  width: 15px;
+}
+
+.center {
+  width: 80vh;
+}
+
+.right {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  width: 15px;
 }
