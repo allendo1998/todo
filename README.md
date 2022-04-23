@@ -4,9 +4,9 @@ A productivity tool for the Google Chrome Extension. This app is a simple app th
 
 ## Project Screen Shots
 
-[ PRETEND SCREEN SHOT IS HERE ]
+<img width="292" alt="Screen Shot 2022-04-23 at 6 26 53 pm" src="https://user-images.githubusercontent.com/53243633/164887447-9c9a247e-3320-4c0d-8445-65475b162b80.png">
 
-[ PRETEND OTHER SCREEN SHOT IS HERE ]
+<img width="376" alt="Screen Shot 2022-04-23 at 6 27 01 pm" src="https://user-images.githubusercontent.com/53243633/164887453-d1370c63-6b4a-482e-aef8-460ef963df08.png">
 
 ## Installation and Setup Instructions
 
