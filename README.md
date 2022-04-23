@@ -30,3 +30,7 @@ Technologies used:
 * Html
 * Css
 
+## Resources
+
+[Chrome Storage](https://developer.chrome.com/docs/extensions/reference/storage/)
+
