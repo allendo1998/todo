@@ -32,5 +32,5 @@ Technologies used:
 
 ## Resources
 
-[Chrome Storage](https://developer.chrome.com/docs/extensions/reference/storage/)
+[Chrome Storage Documentation](https://developer.chrome.com/docs/extensions/reference/storage/)
 
