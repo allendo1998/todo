@@ -5,6 +5,10 @@ const todo = () => {
     const todo = [];    
     load_data();
 
+    /*
+    *   Add Task based on what the user has entered
+    *   in the text field
+    */
     activity.addEventListener("keyup", function(event) {
         if(event.key === 'Enter'){
             var user_input = activity.value;
@@ -17,6 +21,9 @@ const todo = () => {
         }
     })
 
+    /*
+    *   Wait for user to select remove task button
+    */
     row.addEventListener("click", function(e) {
         if(e.target && e.target.nodeName == "A") {
            var id = e.target.id.substr(e.target.id.length - 1);
@@ -25,6 +32,10 @@ const todo = () => {
         }
     })
 
+    /*
+    *   Wait for user to select task and change state
+    *   from being complete or incomplete
+    */
     row.addEventListener("click", function(e) {
         if(e.target && e.target.nodeName == "P" || e.target && e.target.nodeName == "I") {
             var id = e.target.id.substr(e.target.id.length - 1);
@@ -39,6 +50,9 @@ const todo = () => {
         }
     })
 
+    /*
+    *   Update database based on the list locally created
+    */
     async function add() {
         try {
             var value_key = 'todo';
@@ -48,6 +62,12 @@ const todo = () => {
           }
     }
 
+    /*
+    *   Remove task from list
+    *  
+    *   @param {id}:
+    *       id of task
+    */
     function remove(id) {
         if(id == 0){
             todo.splice(0,1);
@@ -58,6 +78,11 @@ const todo = () => {
         add();
     }
 
+
+    /*
+    *   Load local list with tasks saved from
+    *   the database
+    */
     function load_data(){
         try {
             chrome.storage.local.get(['todo'], function(items) {
@@ -73,6 +98,13 @@ const todo = () => {
         }
     }
 
+    /*
+    *   Check if tasks is complete or incomplete and 
+    *   change the appearence of task
+    *  
+    *   @param {id}:
+    *       id of task
+    */
     function check_completed(id){
         console.log(todo[id].completed);
         if(todo[id].completed === false) {
@@ -90,6 +122,9 @@ const todo = () => {
         }
     }
 
+    /*
+    *   Display list of tasks
+    */
     function display_todo_list() {
         row.innerHTML = '';
         for(var i = 0; i < todo.length; i++) {
